@@ -1,6 +1,0 @@
-CREATE TABLE products (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
-    price DOUBLE PRECISION NOT NULL
-); 
