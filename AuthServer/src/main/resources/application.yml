@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: AuthServer
+
+
+server:
+  port: 9000
+  address: 127.0.0.1
+
+logging:
+  level:
+    root: DEBUG
+    com.authorization.AuthServer: DEBUG
+    org:
+      springframework:
+        security:
+          oauth2: DEBUG
