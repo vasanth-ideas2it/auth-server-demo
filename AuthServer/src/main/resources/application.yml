@@ -7,6 +7,14 @@ spring:
   config:
     import: optional:configserver:${spring.cloud.config.uri}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
+  endpoint:
+    refresh:
+      enabled: true
 
 server:
   port: 9000
