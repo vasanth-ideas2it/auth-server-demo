@@ -7,6 +7,9 @@ spring:
         git:
           # Add config files git repo here
           uri: C:\vas\documents\i2i_internal\config-files
+          # username: your-username
+          # password: your-personal-access-token
+          # clone-on-start: true
 
 server:
   port: 8888

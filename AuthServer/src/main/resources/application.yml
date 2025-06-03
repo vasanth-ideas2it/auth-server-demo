@@ -28,3 +28,7 @@ logging:
       springframework:
         security:
           oauth2: DEBUG
+
+app:
+  data:
+    test: App data
