@@ -1,0 +1,20 @@
+app:
+  data:
+    test: AuthServer test value7
+    
+security:
+  roles:
+    - ADMIN
+    - USER_ROLE
+    - MANAGER
+  claims:
+    ADMIN:
+      - read:all
+      - write:all
+      - delete:all
+    USER_ROLE:
+      - read:own
+      - write:own
+    MANAGER:
+      - read:all
+      - write:all

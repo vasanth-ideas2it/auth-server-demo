@@ -1,7 +1,20 @@
 spring:
   application:
     name: AuthServer
+  cloud:
+    config:
+      uri: http://localhost:8888
+  config:
+    import: optional:configserver:${spring.cloud.config.uri}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
+  endpoint:
+    refresh:
+      enabled: true
 
 server:
   port: 9000
@@ -15,3 +28,7 @@ logging:
       springframework:
         security:
           oauth2: DEBUG
+
+app:
+  data:
+    test: App data
