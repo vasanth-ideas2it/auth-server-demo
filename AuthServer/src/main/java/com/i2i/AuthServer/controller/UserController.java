@@ -2,13 +2,12 @@ package com.i2i.AuthServer.controller;
 
 import com.i2i.AuthServer.dto.UserDto;
 import com.i2i.AuthServer.dto.UserResponseDto;
-import com.i2i.AuthServer.model.User;
+
 import com.i2i.AuthServer.service.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;

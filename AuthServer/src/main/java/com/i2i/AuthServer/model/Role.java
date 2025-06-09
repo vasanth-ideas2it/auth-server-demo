@@ -1,6 +1,6 @@
 package com.i2i.AuthServer.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,8 +28,7 @@ public class Role extends Auditable{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Role)) return false;
-        Role role = (Role) o;
+        if (!(o instanceof Role role)) return false;
         return id != null && id.equals(role.id);
     }
 

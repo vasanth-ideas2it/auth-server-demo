@@ -1,7 +1,6 @@
 package com.i2i.AuthServer.controller;
 
 import com.i2i.AuthServer.model.Role;
-import com.i2i.AuthServer.model.User;
 import com.i2i.AuthServer.repository.RoleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

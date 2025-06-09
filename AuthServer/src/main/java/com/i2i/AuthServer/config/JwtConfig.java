@@ -1,6 +1,5 @@
 package com.i2i.AuthServer.config;
 import com.nimbusds.jose.jwk.*;
-import com.nimbusds.jose.util.Base64URL;
 import com.nimbusds.jose.jwk.source.*;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
