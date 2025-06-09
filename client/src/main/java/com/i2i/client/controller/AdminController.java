@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class BookResource {
+public class AdminController {
 
-    @GetMapping("/books")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> getBooks(Authentication authentication) {
 
         assert authentication instanceof JwtAuthenticationToken;
@@ -22,6 +22,6 @@ public class BookResource {
         String username = authentication.getName();
         String jwtString = jwtAuthenticationToken.getToken().getTokenValue();
 
-        return ResponseEntity.ok("Hi "  +username+ ", here are some books [book1, book2],  " + " also here is your jwt : "+jwtString);
+        return ResponseEntity.ok("Hi "  +username+ ", Only access to the Admin role  " + " also here is your jwt : "+jwtString);
     }
 }
