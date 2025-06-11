@@ -13,7 +13,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.Map;
@@ -29,6 +32,7 @@ public class LoginController {
 
 
     @Autowired
+    @Qualifier("userAuthenticationManager")
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -109,12 +113,13 @@ public class LoginController {
                 .collect(Collectors.toSet());
         JwtClaimsSet claims = JwtClaimsSet.builder()
                     .issuer("http://localhost:9000")
-                    .issuedAt(now)
-                    .expiresAt(now.plusSeconds(expirySeconds))
+                    .claim("iat", now.getEpochSecond())
+                    .claim("exp", now.plusSeconds(expirySeconds).getEpochSecond())
                     .subject(user.getUsername())
                     .claim("scope", String.join(" ", Set.of("openid", "email", "profile")))
                     .claim("roles", roles)
                     .claim("type", type)
+                    .id(UUID.randomUUID().toString())
                     .build();
 
 

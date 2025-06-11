@@ -1,9 +1,9 @@
 package com.i2i.AuthServer.dto;
 
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import jakarta.validation.constraints.*;
 import java.util.Set;
 
 @Getter

@@ -88,7 +88,6 @@ public class UserServiceImpl {
             user.setRoles(resolvedRoles);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-            //user.setLastModifiedDate(LocalDateTime.now());
             return modelMapper.map(userRepository.save(user),UserResponseDto.class);
         }else {
             throw new UserNotFoundException("User not Found");

@@ -1,26 +1,45 @@
 package com.i2i.AuthServer.controller;
 
+
 import com.i2i.AuthServer.service.TokenBlacklistService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Instant;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users/logout")
 public class LogoutController {
 
-    private final TokenBlacklistService tokenBlacklistService;
+    @Autowired
+    @Qualifier("jwtDecoderWithoutBlacklist")
+    JwtDecoder jwtDecoder;
 
-    public LogoutController(TokenBlacklistService tokenBlacklistService) {
-        this.tokenBlacklistService = tokenBlacklistService;
-    }
+    @Autowired
+    TokenBlacklistService tokenBlacklistService;
+
 
     @PostMapping
-    public String logout(Authentication authentication) {
-        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
-        String jwtString = jwtAuthenticationToken.getToken().getTokenValue();
-
-        tokenBlacklistService.blacklistToken(jwtString);
-        return "Logged out successfully.";
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            Jwt decoded = jwtDecoder.decode(token);
+            String jti = decoded.getId();
+            Instant expiry = decoded.getExpiresAt();
+            tokenBlacklistService.blacklistToken(jti, expiry);
+            return ResponseEntity.ok(Map.of("message", "Token invalidated successfully"));
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Invalid token"));
+        }
     }
 }

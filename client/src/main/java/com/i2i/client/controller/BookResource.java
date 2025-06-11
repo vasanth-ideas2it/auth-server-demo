@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,12 +15,8 @@ public class BookResource {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<String> getBooks(Authentication authentication) {
 
-        assert authentication instanceof JwtAuthenticationToken;
-        authentication.getAuthorities().forEach(auth -> System.out.println("Granted authority: " + auth.getAuthority()));
-        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
         String username = authentication.getName();
-        String jwtString = jwtAuthenticationToken.getToken().getTokenValue();
 
-        return ResponseEntity.ok("Hi "  +username+ ", here are some books [book1, book2],  " + " also here is your jwt : "+jwtString);
+        return ResponseEntity.ok("Hi " + username + ", here are some books [book1, book2],  ");
     }
 }

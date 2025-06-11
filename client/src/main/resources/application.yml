@@ -2,8 +2,10 @@ spring:
   security:
     oauth2:
       resourceserver:
-        jwt:
-          issuer-uri: http://localhost:9000
+        customOpaqueToken:
+          introspectionUri: http://localhost:9000/oauth2/custom-introspect
+          clientId: gateway-client
+          clientSecret: secret
   application:
     name: client
 server:

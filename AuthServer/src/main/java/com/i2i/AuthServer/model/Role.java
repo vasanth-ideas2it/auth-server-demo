@@ -1,9 +1,11 @@
 package com.i2i.AuthServer.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +30,8 @@ public class Role extends Auditable{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Role role)) return false;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
         return id != null && id.equals(role.id);
     }
 
