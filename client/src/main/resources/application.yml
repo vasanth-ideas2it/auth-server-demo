@@ -1,11 +1,4 @@
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        customOpaqueToken:
-          introspectionUri: http://localhost:9000/oauth2/custom-introspect
-          clientId: gateway-client
-          clientSecret: secret
   application:
     name: client
 server:
@@ -19,3 +12,9 @@ logging:
       springframework:
         security:
           oauth2: DEBUG
+
+oauth:
+  authorization:
+    introspectUrl: http://localhost:9000/oauth2/custom-introspect
+    clientId: gateway-client
+    clientSecret: secret

@@ -1,6 +1,9 @@
 package com.i2i.client.config;
 
+import com.i2i.client.model.OAuthAuthorizationProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,17 +30,18 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-//    @Value("${spring.security.oauth2.resourceserver.customOpaqueToken.introspectionUri}")
-    private String introspectionUri
-        ="http://localhost:9000/oauth2/custom-introspect";
+    private final OAuthAuthorizationProperties properties;
 
-//    @Value("${spring.security.oauth2.resourceserver.customOpaqueToken.clientId}")
-    private String clientId
-        ="gateway-client";
+    public CustomOpaqueTokenIntrospector(OAuthAuthorizationProperties properties) {
+        this.properties = properties;
+    }
 
-//    @Value("${spring.security.oauth2.resourceserver.customOpaqueToken.clientSecret}")
-    private String clientSecret
-        ="secret";
+    @PostConstruct
+    public void printConfig() {
+        log.info("Introspection URL: {}", properties.getIntrospectUrl());
+        log.info("Client ID: {}", properties.getClientId());
+        log.info("Client Secret: {}", properties.getClientSecret());
+    }
 
     private final String TOKEN = "token";
 
@@ -52,7 +56,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth(clientId, clientSecret);
+        headers.setBasicAuth(properties.getClientId(), properties.getClientSecret());
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
@@ -60,7 +64,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form, headers);
 
-        ResponseEntity<Map> response = restTemplate.postForEntity(introspectionUri, request, Map.class);
+        ResponseEntity<Map> response = restTemplate.postForEntity(properties.getIntrospectUrl(), request, Map.class);
         Map<String, Object> claims = response.getBody();
 
         log.debug("Introspection response: " + claims);

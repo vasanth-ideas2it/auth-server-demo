@@ -12,6 +12,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector;
+
+    public SecurityConfig(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector) {
+        this.customOpaqueTokenIntrospector = customOpaqueTokenIntrospector;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -20,7 +26,7 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .opaqueToken(opaque -> opaque
-                                .introspector(new CustomOpaqueTokenIntrospector()))
+                                .introspector(customOpaqueTokenIntrospector))
                 );
         return http.build();
     }
