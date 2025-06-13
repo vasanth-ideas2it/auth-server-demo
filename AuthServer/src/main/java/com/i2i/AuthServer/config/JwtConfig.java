@@ -1,5 +1,6 @@
 package com.i2i.AuthServer.config;
 
+import com.i2i.AuthServer.fileloader.RsaKeyUtil;
 import com.i2i.AuthServer.service.TokenBlacklistService;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -8,6 +9,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,12 +21,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
-import java.util.UUID;
 
 @Configuration
 @Slf4j
@@ -32,6 +29,13 @@ public class JwtConfig {
 
     @Autowired
     TokenBlacklistService tokenBlacklistService;
+
+    @Value("${jwt.keys.private-file-path}")
+    private String privateKeyPath;
+
+    @Value("${jwt.keys.public-file-path}")
+    private String publicKeyPath;
+
 
 
     @Bean
@@ -42,17 +46,24 @@ public class JwtConfig {
 
     private RSAKey generateRsa() {
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+//            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+//            keyPairGenerator.initialize(2048);
+//            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+//
+//            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+//            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+//
+//            return new RSAKey.Builder(publicKey)
+//                    .privateKey(privateKey)
+//                    .keyID(UUID.randomUUID().toString())
+//                    .build();
 
-            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-            return new RSAKey.Builder(publicKey)
-                    .privateKey(privateKey)
-                    .keyID(UUID.randomUUID().toString())
+            return new RSAKey.Builder(RsaKeyUtil.loadPublicKeyFromFile(publicKeyPath))
+                    .privateKey(RsaKeyUtil.loadPrivateKeyFromFile(privateKeyPath))
+                    .keyID("AuthServer") // can be any identifier
                     .build();
+
+
         } catch (Exception e) {
             throw new IllegalStateException("Failed to generate RSA key", e);
         }

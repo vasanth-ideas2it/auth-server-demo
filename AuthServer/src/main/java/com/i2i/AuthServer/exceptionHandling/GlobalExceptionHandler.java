@@ -47,6 +47,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorModelList, HttpStatus.EXPECTATION_FAILED);
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorModel> handleAuthenticationException(Exception ex)
+    {
+        ErrorModel  errorModel=ErrorModel.builder().errorCode(25).description(ex.getMessage()).build();
+        return new ResponseEntity<>(errorModel, HttpStatus.UNAUTHORIZED);
+    }
 
 
 

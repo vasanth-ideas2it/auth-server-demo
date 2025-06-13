@@ -37,3 +37,10 @@ auth:
     clientId: gateway-client
     hostUrl: http://localhost:8081
     secret: secret
+    AccessTokenExpireTime: 3600
+    refreshTokenExpireTime: 604800
+
+jwt:
+  keys:
+    private-file-path: C:\Users\kanagaraj.velusamy\Downloads\client\auth-server-demo\AuthServer\src\main\resources\keys\private_key.pem
+    public-file-path: C:\Users\kanagaraj.velusamy\Downloads\client\auth-server-demo\AuthServer\src\main\resources\keys\public_key.pem
