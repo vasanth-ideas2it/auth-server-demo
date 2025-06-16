@@ -1,9 +1,4 @@
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://127.0.0.1:9000
   application:
     name: client
 server:
@@ -17,3 +12,9 @@ logging:
       springframework:
         security:
           oauth2: DEBUG
+
+oauth:
+  authorization:
+    introspectUrl: http://localhost:9000/oauth2/custom-introspect
+    clientId: gateway-client
+    clientSecret: secret

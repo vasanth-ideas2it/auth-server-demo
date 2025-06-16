@@ -1,17 +1,51 @@
 spring:
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
   application:
     name: AuthServer
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/auth?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  sql:
+    init:
+      mode: always
 
 
 server:
   port: 9000
-  address: 127.0.0.1
 
 logging:
   level:
     root: DEBUG
     com.authorization.AuthServer: DEBUG
-    org:
-      springframework:
-        security:
-          oauth2: DEBUG
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.web.authentication: DEBUG
+    org.springframework.security.web.access: DEBUG
+
+
+auth:
+  gateway:
+    clientId: gateway-client
+    hostUrl: http://localhost:8081
+    secret: secret
+    AccessTokenExpireTime: 3600
+    refreshTokenExpireTime: 3600
+
+jwt:
+  keys:
+    private-file-path: C:\Users\kanagaraj.velusamy\Downloads\client\auth-server-demo\AuthServer\src\main\resources\keys\private_key.pem
+    public-file-path: C:\Users\kanagaraj.velusamy\Downloads\client\auth-server-demo\AuthServer\src\main\resources\keys\public_key.pem
