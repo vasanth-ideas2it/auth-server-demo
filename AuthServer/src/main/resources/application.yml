@@ -1,4 +1,9 @@
 spring:
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
   application:
     name: AuthServer
   datasource:
@@ -38,7 +43,7 @@ auth:
     hostUrl: http://localhost:8081
     secret: secret
     AccessTokenExpireTime: 3600
-    refreshTokenExpireTime: 604800
+    refreshTokenExpireTime: 3600
 
 jwt:
   keys:

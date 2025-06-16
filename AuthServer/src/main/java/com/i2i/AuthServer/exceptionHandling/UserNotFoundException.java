@@ -2,6 +2,8 @@ package com.i2i.AuthServer.exceptionHandling;
 
 public class UserNotFoundException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     public UserNotFoundException() {
     }
 

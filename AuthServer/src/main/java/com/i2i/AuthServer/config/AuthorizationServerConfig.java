@@ -102,40 +102,6 @@ public class AuthorizationServerConfig {
         return new ProviderManager(daoProvider);
     }
 
-//    @Bean
-//    @Order(1) // security filter chain for the authorization server
-//    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-//
-//        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
-//                OAuth2AuthorizationServerConfigurer.authorizationServer();
-//
-//
-//
-
-    /// /        http
-    /// /                .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-    /// /                .oidc(Customizer.withDefaults());
-//        //http.formLogin(Customizer.withDefaults());
-//        http
-//                .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-//                .with(authorizationServerConfigurer, authorizationServer ->
-//                        authorizationServer.oidc(Customizer.withDefaults()) // enable openid connect
-//                )
-//                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
-//
-//
-//        http
-//                .exceptionHandling((exceptions) -> // If any errors occur redirect user to login page
-//                        exceptions.defaultAuthenticationEntryPointFor(
-//                                new LoginUrlAuthenticationEntryPoint(loginUrl),
-//                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
-//                        )
-//                )
-//
-//                .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()));
-//
-//        return http.build();
-//    }
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {

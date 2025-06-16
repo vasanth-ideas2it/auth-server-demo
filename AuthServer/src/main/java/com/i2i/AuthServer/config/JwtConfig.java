@@ -46,18 +46,6 @@ public class JwtConfig {
 
     private RSAKey generateRsa() {
         try {
-//            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-//            keyPairGenerator.initialize(2048);
-//            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-//
-//            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-//            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-//
-//            return new RSAKey.Builder(publicKey)
-//                    .privateKey(privateKey)
-//                    .keyID(UUID.randomUUID().toString())
-//                    .build();
-
             return new RSAKey.Builder(RsaKeyUtil.loadPublicKeyFromFile(publicKeyPath))
                     .privateKey(RsaKeyUtil.loadPrivateKeyFromFile(privateKeyPath))
                     .keyID("AuthServer") // can be any identifier

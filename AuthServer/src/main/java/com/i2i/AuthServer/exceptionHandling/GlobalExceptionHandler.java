@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorModel> handleUserNotFoundException(Exception ex) {
+    public ResponseEntity<ErrorModel> handleUserNotFoundException(UserNotFoundException ex) {
         ErrorModel  errorModel=ErrorModel.builder().errorCode(15).description(ex.getMessage()).build();
         return new ResponseEntity<>(errorModel, HttpStatus.EXPECTATION_FAILED);
     }
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorModel> handleAuthenticationException(Exception ex)
+    public ResponseEntity<ErrorModel> handleAuthenticationException(AuthenticationException ex)
     {
         ErrorModel  errorModel=ErrorModel.builder().errorCode(25).description(ex.getMessage()).build();
         return new ResponseEntity<>(errorModel, HttpStatus.UNAUTHORIZED);

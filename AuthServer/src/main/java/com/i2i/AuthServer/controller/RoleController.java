@@ -22,7 +22,7 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createUser(@RequestBody Role role) {
+    public ResponseEntity<Role> createRole(@RequestBody Role role) {
         roleRepository.save(role);
         return ResponseEntity.status(HttpStatus.CREATED).body(role);
     }

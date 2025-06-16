@@ -2,6 +2,8 @@ package com.i2i.AuthServer.exceptionHandling;
 
 public class UserAlreadyPresent extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     public UserAlreadyPresent() {
     }
 
